@@ -1,0 +1,438 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Supermercado API",
+    "description": "Serviço - Supermercado API.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Produtos",
+      "description": "Encontrar todos os produtos do supermercado online"
+    },
+    {
+      "name": "Usuário",
+      "description": "Buscar usuários"
+    },
+    {
+      "name": "Categorias",
+      "description": "Buscar categorias"
+    }
+  ],
+  "paths": {
+    "/product/{id}": {
+      "get": {
+        "tags": [
+          "Produtos"
+        ],
+        "summary": "Retorna o produto pelo id",
+        "description": "Retorna o produto pelo id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do produto que deseja buscar",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/NamesAttributes"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produto encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Produto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Não foi possível completar a requisição, verifique se os parametros foram inseridos corretamente.",
+            "content": {}
+          },
+          "404": {
+            "description": "Produto não encontrado.",
+            "content": {}
+          },
+          "500": {
+            "description": "Erro no serviço",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/products/": {
+      "get": {
+        "tags": [
+          "Produtos"
+        ],
+        "summary": "Retorna uma array de produtos",
+        "description": "Retorna uma array de produtos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Pagination"
+          },
+          {
+            "$ref": "#/components/parameters/ReturnLimit"
+          },
+          {
+            "$ref": "#/components/parameters/NamesAttributes"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductsWithPagination"
+          },
+          "400": {
+            "description": "Não foi possível completar a requisição, verifique se os parametros foram inseridos corretamente.",
+            "content": {}
+          },
+          "500": {
+            "description": "Erro no serviço",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/products/category/{id}": {
+      "get": {
+        "tags": [
+          "Produtos"
+        ],
+        "summary": "Retorna os produtos pela categoría.",
+        "description": "Retorna os produtos de uma categoria específica",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da categoria que deseja buscar",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Pagination"
+          },
+          {
+            "$ref": "#/components/parameters/ReturnLimit"
+          },
+          {
+            "$ref": "#/components/parameters/NamesAttributes"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductsWithPagination"
+          },
+          "400": {
+            "description": "Não foi possível completar a requisição, verifique se os parametros foram inseridos corretamente.",
+            "content": {}
+          },
+          "404": {
+            "description": "Produto não encontrado.",
+            "content": {}
+          },
+          "500": {
+            "description": "Erro no serviço",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/categories/": {
+      "get": {
+        "tags": [
+          "Categorias"
+        ],
+        "summary": "Retorna todas as categorias",
+        "description": "Retorna todas as categorias",
+        "responses": {
+          "200": {
+            "description": "Categorias encontradas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Categoria"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Não foi possível completar a requisição, verifique se os parametros foram inseridos corretamente.",
+            "content": {}
+          },
+          "500": {
+            "description": "Erro no serviço",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/register/user/": {
+      "post": {
+        "tags": [
+          "Usuário"
+        ],
+        "summary": "Cadastra um novo usuário",
+        "description": "Cadastra um novo usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "type": "string"
+                  },
+                  "sobrenome": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "senha": {
+                    "type": "string"
+                  },
+                  "telefone": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "data_nascimento": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "nome",
+                  "sobrenome",
+                  "email",
+                  "senha",
+                  "telefone",
+                  "cpf",
+                  "data_nascimento"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário cadastrado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Usuario"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Não foi possível completar a requisição, verifique se os parametros foram inseridos corretamente.",
+            "content": {}
+          },
+          "500": {
+            "description": "Erro no serviço",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/products/name/{name}": {
+      "get": {
+        "tags": [
+          "Produtos"
+        ],
+        "summary": "Retorna uma array de produtos que contêm parte do nome",
+        "description": "Retorna uma array de produtos que contêm parte do nome",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "description": "Parte do nome do produto que deseja buscar",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Pagination"
+          },
+          {
+            "$ref": "#/components/parameters/ReturnLimit"
+          },
+          {
+            "$ref": "#/components/parameters/NamesAttributes"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductsWithPagination"
+          },
+          "400": {
+            "description": "Não foi possível completar a requisição, verifique se os parametros foram inseridos corretamente.",
+            "content": {}
+          },
+          "404": {
+            "description": "Produto não encontrado.",
+            "content": {}
+          },
+          "500": {
+            "description": "Erro no serviço",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "ProductsWithPagination": {
+        "description": "Produto encontrado",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "limit": {
+                  "type": "integer"
+                },
+                "page": {
+                  "type": "integer"
+                },
+                "offset": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Produto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Usuario": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "sobrenome": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "senha": {
+            "type": "string"
+          },
+          "telefone": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "data_nascimento": {
+            "type": "string"
+          }
+        }
+      },
+      "Categoria": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "nome": {
+            "type": "string"
+          }
+        }
+      },
+      "Produto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "preco": {
+            "type": "number"
+          },
+          "quantidade": {
+            "type": "integer"
+          },
+          "image_src": {
+            "type": "string"
+          },
+          "codigo_barras": {
+            "type": "string"
+          },
+          "category_id": {
+            "type": "integer"
+          },
+          "Category": {
+            "$ref": "#/components/schemas/Categoria"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "ReturnLimit": {
+        "name": "limit",
+        "in": "query",
+        "description": "Número de registros retornados.",
+        "schema": {
+          "type": "integer",
+          "default": 15
+        }
+      },
+      "Pagination": {
+        "name": "page",
+        "in": "query",
+        "description": "Número da página que deseja buscar.",
+        "schema": {
+          "type": "integer",
+          "default": 1
+        }
+      },
+      "NamesAttributes": {
+        "name": "fields",
+        "in": "query",
+        "description": "Array com os nomes dos atributos que deseja receber.",
+        "style": "form",
+        "explode": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
