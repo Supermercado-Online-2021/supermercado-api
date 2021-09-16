@@ -14,11 +14,6 @@ module.exports = {
         database: process.env.PROD_DATABASE,
         username: process.env.PROD_USERNAME,
         password: process.env.PROD_PASSWORD,
-        dialect: process.env.PROD_DIALECT,
-        dialectOptions: {
-            ssl:'Amazon RDS'
-        },
-        pool: { maxConnections: 5, maxIdleTime: 30},
-        language: 'en'
+        dialect: process.env.PROD_DIALECT
     }
 }
