@@ -9,11 +9,16 @@ module.exports = {
         dialect: process.env.DEV_DIALECT
     },
     production: {
-        host: process.env.HOST,
-        port: process.env.DB_PORT,
-        database: process.env.DATABASE,
-        username: process.env.USERNAME,
-        password: process.env.PASSWORD,
-        dialect: process.env.DIALECT
+        host: process.env.PROD_HOST,
+        port: process.env.PROD_DB_PORT,
+        database: process.env.PROD_DATABASE,
+        username: process.env.PROD_USERNAME,
+        password: process.env.PROD_PASSWORD,
+        dialect: process.env.PROD_DIALECT,
+        dialectOptions: {
+            ssl:'Amazon RDS'
+        },
+        pool: { maxConnections: 5, maxIdleTime: 30},
+        language: 'en'
     }
 }

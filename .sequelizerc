@@ -1,11 +1,13 @@
 'use strict';
 
 require('dotenv').config();
-
 const path = require('path');
 
+
+
 module.exports = {
-    config: path.resolve( __dirname, 'src', 'config', 'db.config.js' ),
+    env: process.env.CONNECTION || 'development',
+    config: path.resolve( __dirname, 'src', 'config', 'db.config.js'),
     'models-path': path.resolve( __dirname, 'src', 'models'),
     'migrations-path': path.resolve( __dirname, 'src', 'database', 'migrations'),
     'seeders-path': path.resolve( __dirname, 'src', 'database', 'seeders' )
