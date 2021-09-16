@@ -1,7 +1,7 @@
 
 import express from 'express'
 
-import categoryController from '@Controllers/categoryController/index';
+import categoryController from '../controllers/categoryController/';
 
 
 

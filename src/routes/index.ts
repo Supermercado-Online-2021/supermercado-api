@@ -1,9 +1,9 @@
 
 import express from 'express';
 
-import users from '@Routes/users';
-import categories from '@Routes/categories';
-import products from '@Routes/products';
+import users from './users';
+import categories from './categories';
+import products from './products';
 
 
 

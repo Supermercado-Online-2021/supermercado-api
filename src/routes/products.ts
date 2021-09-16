@@ -1,10 +1,10 @@
 
 import express from 'express'
 
-import productController from '@Controllers/productController/index';
+import productController from '../controllers/productController/';
 
-import validatePagination from '@Middlewares/validatePagination';
-import { validateProductAttributes } from '@Middlewares/validateAttributes';
+import validatePagination from '../middlewares/validatePagination';
+import { validateProductAttributes } from '../middlewares/validateAttributes';
 
 
 

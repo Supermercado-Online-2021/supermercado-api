@@ -1,5 +1,5 @@
 
-import userInsert from '@Controllers/userController/insertUser'
+import userInsert from './insertUser'
 
 
 

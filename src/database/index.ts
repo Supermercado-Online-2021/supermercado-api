@@ -1,8 +1,8 @@
 
 import { Options, Sequelize } from 'sequelize';
-import { EnvironmentNameOptions, EnvironmentOptions } from "@Types/SequelizeConfig"
+import { EnvironmentNameOptions, EnvironmentOptions } from "../types/SequelizeConfig"
 
-import dbConfig from '@Config/db.config';
+import dbConfig from '../config/db.config';
 
 
 

@@ -2,7 +2,7 @@
 import { Op } from "sequelize";
 import { Request, Response } from 'express';
 
-import models from '@Models/index';
+import models from '../../models/';
 
 
 

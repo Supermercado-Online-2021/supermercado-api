@@ -1,5 +1,5 @@
 
-import userController from '@Controllers/userController';
+import userController from '../controllers/userController';
 import express from 'express'
 
 

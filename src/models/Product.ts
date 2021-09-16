@@ -1,6 +1,6 @@
 
 import { DataTypes } from 'sequelize';
-import sequelize from "@Database/index";
+import sequelize from "../database/";
 
 
 

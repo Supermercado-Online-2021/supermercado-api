@@ -1,6 +1,6 @@
 
-import User from '@Models/User'
-import Category from '@Models/Category'
+import User from './User'
+import Category from './Category'
 import Product from './Product'
 
 

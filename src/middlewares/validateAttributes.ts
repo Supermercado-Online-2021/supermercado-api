@@ -2,7 +2,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Query, RequestHandler } from 'express-serve-static-core';
 
-import models from '@Models/index';
+import models from '../models/';
 
 
 

@@ -5,7 +5,7 @@ import express from 'express';
 const swaggerUi = require('swagger-ui-express');
 import swaggerDocument from './swagger.json';
 
-import routes from '@Routes/index'
+import routes from './src/routes/'
 
 
 
