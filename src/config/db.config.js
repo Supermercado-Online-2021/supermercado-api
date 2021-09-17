@@ -14,6 +14,7 @@ module.exports = {
         database: process.env.PROD_DATABASE,
         username: process.env.PROD_USERNAME,
         password: process.env.PROD_PASSWORD,
-        dialect: process.env.PROD_DIALECT
+        dialect: process.env.PROD_DIALECT,
+        logging: false
     }
 }
