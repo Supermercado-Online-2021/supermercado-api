@@ -8,6 +8,9 @@
   "servers": [
     {
       "url": "http://localhost:3000/api"
+    },
+    {
+      "url": "https://supermercado-online-api.herokuapp.com/api/"
     }
   ],
   "tags": [
