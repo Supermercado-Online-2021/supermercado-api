@@ -2,8 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 
 
-const limitPossibilities = [ 8, 16, 24 ];
-const defaultLimit = limitPossibilities[0];
+const defaultLimit = 2;
 const defaultPage = 1; 
 
 async function validatePagination( req: Request, res: Response, next: NextFunction ){
@@ -13,12 +12,10 @@ async function validatePagination( req: Request, res: Response, next: NextFuncti
         const limit = Number(query.limit) || defaultLimit;
         const page = Number(query.page) || defaultPage;
 
-        const correctLimit = limitPossibilities.find( possibility => possibility === limit ) || defaultLimit;
-
         res.locals = {
             ...res.locals,
-            limit: correctLimit, 
-            offset: correctLimit * (page-1),
+            limit, 
+            offset: limit * (page-1),
             page
         };
     
