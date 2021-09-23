@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node ./dist/index.js",
     "dev": "ts-node-dev ./index.ts"
   },
@@ -32,9 +32,12 @@
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/jest": "^27.0.2",
     "@types/node": "^16.9.0",
     "@types/sequelize": "^4.28.10",
+    "jest": "^27.2.1",
     "sequelize-cli": "^6.2.0",
+    "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",
     "ts-node-dev": "^1.1.8"
   }
