@@ -1,15 +1,11 @@
 
+import checkAllValidation from "../../util/checkAllValidations";
+import Validation from "../../types/Validation";
+
 const lowerCase = 'abcdefghijklmnopqrstuvwxyz';
 const upperCase = lowerCase.toUpperCase();
 const numbers = '0123456789';
 const characterSpecial = '[]{}()_-#%$';
-
-
-
-interface Validation {
-    pass: boolean,
-    message: string
-}
 
 
 
@@ -46,21 +42,18 @@ export const validatePasswordWithNumbers = (password: string) =>
     validate( password, 1, numbers, 'Senha deve conter ao menos 1 número.' );
 
 export const validatePasswordWithCharacterSpecial= (password: string) =>
-    validate( password, 1, characterSpecial, `Senha deve conter ao menos 2 caracteres especiais: ${characterSpecial}` );
+    validate( password, 2, characterSpecial, `Senha deve conter ao menos 2 caracteres especiais: ${characterSpecial}` );
 
 
 
-export default function validatePassword(password: string): Validation {
-    const validations: Validation[] = [
+function validatePassword(password: string): Validation {
+    return checkAllValidation([
         validatePasswordLength(password),
         validatePasswordWithLowerCase(password),
         validatePasswordWithUpperCase(password),
         validatePasswordWithNumbers(password),
         validatePasswordWithCharacterSpecial(password)
-    ];
-
-    return validations.find( validate => validate.pass === false ) || {
-        pass: true,
-        message: "Senha válida."
-    };
+    ], 'Senha válida.');
 }
+
+export default validatePassword;
