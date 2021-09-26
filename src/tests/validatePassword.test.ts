@@ -5,11 +5,11 @@ import validatePassword, {
     validatePasswordWithLowerCase,
     validatePasswordWithUpperCase,
     validatePasswordWithNumbers
-} from '../util/validatePassword'
+} from '../middlewares/userValidation/validatePassword'
 
 
 
-describe( 'Validation Password', () => {
+describe( 'Password Validation', () => {
     const password = 'Aaj0$#jR'
 
     test('If password must contain at least 8 characters', () => {
