@@ -3,14 +3,17 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         return await queryInterface.bulkInsert( 'categories', [
-            { nome: 'Açougue'},
-            { nome: 'Frios e laticínios'},
-            { nome: 'Adega e bebidas'},
-            { nome: 'Higiene e limpeza'},
-            { nome: 'Hortifruti e mercearia'},
-            { nome: 'Padaria'},
-            { nome: 'Enlatados'},
-            { nome: 'Cereais'}
+            { nome: 'Bebidas Alcoólicas' },
+            { nome: 'Bebidas' },
+            { nome: 'Açougue' },
+            { nome: 'Higiene e Beleza' },
+            { nome: 'Limpeza' },
+            { nome: 'Doces, Biscoitos e Confeitaria' },
+            { nome: 'Pratos Prontos e Congelados' },
+            { nome: 'Frios e Laticínios' },
+            { nome: 'Utilidade de Casa' },
+            { nome: 'Leites' },
+            { nome: 'Mercenaria' }
         ], {});
     },
 

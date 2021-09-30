@@ -10,11 +10,11 @@ module.exports = {
                 autoIncrement: true,
             },
             nome: {
-                type: Sequelize.STRING(50),
+                type: Sequelize.STRING,
                 allowNull: false
             },
             preco: {
-                type: Sequelize.DECIMAL(4,2),
+                type: Sequelize.DECIMAL(6,2),
                 allowNull: false
             },
             quantidade: {
