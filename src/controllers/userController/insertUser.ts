@@ -1,4 +1,5 @@
 
+import cryptographyPassword from '../../util/cryptographyPassword';
 import { Request, Response } from 'express'
 import models from '../../models/'
 
@@ -9,8 +10,10 @@ async function insertUser( req: Request, res: Response ) {
         const { email, senha, cpf } = req.body;
         const { nome, sobrenome, telefone, data_nascimento } = req.body;
 
+        const password = await cryptographyPassword(senha);
+
         const result = await models.User.create({
-            email, senha, cpf,
+            email, senha: password, cpf,
             nome, sobrenome, telefone, data_nascimento
         }); 
 

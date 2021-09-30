@@ -1,8 +1,10 @@
 
-import userInsert from './insertUser'
+import userInsert from './insertUser';
+import signInUser from './signInUser';
 
 
 
 export default {
-    userInsert
+    userInsert,
+    signInUser
 }
