@@ -1,4 +1,8 @@
-import Validation from "@Types/Validation";
+
+import Validation from "../../types/Validation";
+import checkAllValidation from "../../util/checkAllValidations";
+
+
 
 const invalidCPFs  = [
     '00000000000',
@@ -21,7 +25,7 @@ export const splitCPF = ( cpf: string ) => cpf
 
 
 
-const validate = (cpf: number[], amount: number) => {
+const validate = (cpf: number[], amount: number, message: string ): Validation => {
     const verificationDigitIndex = amount-1;
 
     const sum = cpf.reduce( (acc, value, index ) => {
@@ -33,34 +37,51 @@ const validate = (cpf: number[], amount: number) => {
     let rest = (sum * 10) % 11;
     rest = rest >= 10 ? 0: rest;
 
-    return rest === cpf[verificationDigitIndex];
+    return {
+        pass: rest === cpf[verificationDigitIndex],
+        message
+    }
 }
 
 
 
-export const cpfIsInvalid = (cpf: string) =>
-    invalidCPFs.some( invalid => invalid === cpf );
+export const cpfIsInvalid = (cpf: string): Validation => {
+    const validate = !invalidCPFs.some( invalid => invalid === cpf );
+    
+    return {
+        pass: validate,
+        message: validate
+            ? "CPF valido"
+            : "CPF inválido"
+    }
+}
+
+export const validateCPFLength = (cpf: string): Validation => {
+    const validate = cpf.length === 11
+
+    return {
+        pass: validate,
+        message: validate
+            ? "Tamanho do cpf válido"
+            : "Tamanho do cpf inválido"
+    }
+}
 
 export const validateFirstVerificationDigit = (cpf: number[]) =>
-    validate( cpf, 10 );
+    validate( cpf, 10, 'Primeiro digito de validação inválido' );
 
 export const validateSecondVerificationDigit = (cpf: number[]) =>
-    validate( cpf, 11 );
+    validate( cpf, 11, 'Segundo digito de validação inválido' );
 
 
 
 export default function validateCPF( cpf: string ): Validation {
     const arrayCPF = splitCPF(cpf);
 
-    const invalid = cpfIsInvalid(cpf);
-    const first = validateFirstVerificationDigit(arrayCPF);
-    const second = validateSecondVerificationDigit(arrayCPF);
-
-    const validate = !invalid && first && second;
-    return {
-        pass: validate,
-        message: validate
-            ? 'CPF valido.'
-            : 'CPF invalido.'
-    }
+    return checkAllValidation([
+        cpfIsInvalid(cpf),
+        validateCPFLength(cpf),
+        validateFirstVerificationDigit(arrayCPF),
+        validateSecondVerificationDigit(arrayCPF)
+    ], 'CPF válido')
 }

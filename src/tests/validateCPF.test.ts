@@ -2,6 +2,7 @@
 import validateCPF, {
     splitCPF,
     cpfIsInvalid,
+    validateCPFLength,
     validateFirstVerificationDigit,
     validateSecondVerificationDigit
 } from '../middlewares/userValidation/validateCPF'
@@ -43,15 +44,19 @@ describe('CPF Validation', () => {
 
         describe(`Validation CPF ${cpf}`, () => {
             test('If the cpf isnt repeated', () => {
-                expect(cpfIsInvalid(cpf)).toBeFalsy();
+                expect(cpfIsInvalid(cpf).pass).toBeTruthy();
+            });
+
+            test('If the cpf length is 11', () => {
+                expect(validateCPFLength(cpf).pass).toBeTruthy();
             });
 
             test('If the first verification digit is validate', () => {
-                expect(validateFirstVerificationDigit(arrayCPF)).toBeTruthy();
+                expect(validateFirstVerificationDigit(arrayCPF).pass).toBeTruthy();
             });
 
             test('If the second verification digit is validate', () => {
-                expect(validateSecondVerificationDigit(arrayCPF)).toBeTruthy();
+                expect(validateSecondVerificationDigit(arrayCPF).pass).toBeTruthy();
             });
 
             test('If the CPF is validate', () => {
