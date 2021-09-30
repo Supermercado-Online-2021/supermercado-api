@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 
 
-const defaultLimit = 2;
+const defaultLimit = 15;
 const defaultPage = 1; 
 
 async function validatePagination( req: Request, res: Response, next: NextFunction ){
