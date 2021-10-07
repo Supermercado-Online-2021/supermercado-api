@@ -12,16 +12,39 @@ import userProductRelationshipMiddleware from '../middlewares/userProductRelatio
 
 const router = express.Router();
 
-router.use(opcionalAuthUserMiddleware);
-router.use(validateProductAttributes);
 
-router.get( '/product/:id', productController.findProductByPk );
+const defaultMiddlewares = [
+    opcionalAuthUserMiddleware,
+    validateProductAttributes,
+]
 
-router.get( '/products', validatePagination, productController.findAllProducts );
-router.get( '/products/category/:category_id', validatePagination, productController.findProductsByCategory );
-router.get( '/products/name/:name', validatePagination, productController.findProductsByName );
 
-router.use( userProductRelationshipMiddleware );
+
+router.get( '/product/:id', 
+    productController.findProductByPk, 
+    userProductRelationshipMiddleware );
+
+router.get( '/products', 
+    ...defaultMiddlewares, 
+    validatePagination, 
+    productController.findAllProducts, 
+    userProductRelationshipMiddleware 
+);
+
+router.get( '/products/category/:category_id', 
+    ...defaultMiddlewares, 
+    validatePagination, 
+    productController.findProductsByCategory,
+    userProductRelationshipMiddleware 
+);
+
+router.get( '/products/name/:name', 
+    ...defaultMiddlewares, 
+    validatePagination, 
+    productController.findProductsByName, 
+    userProductRelationshipMiddleware 
+);
+
 
 
 export default router;
