@@ -51,4 +51,4 @@ const validateQuery = (allowedAttributes: string[]): RequestHandler =>
 
 
 const productAttributes = Object.keys(models.Product.rawAttributes);
-export const validateProductAttributes = validateQuery(productAttributes);
+export const validateProductAttributes = validateQuery([ 'id', ...productAttributes]);

@@ -10,7 +10,9 @@ async function validatePagination( req: Request, res: Response, next: NextFuncti
 
     try {
         const limit = Number(query.limit) || defaultLimit;
-        const page = Number(query.page) || defaultPage;
+        const page = Number(query.page) > 0 
+            ? Number(query.page)
+            : defaultPage;
 
         res.locals = {
             ...res.locals,
