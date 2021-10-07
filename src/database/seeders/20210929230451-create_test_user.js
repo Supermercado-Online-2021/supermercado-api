@@ -6,19 +6,14 @@ module.exports = {
       nome: "Jorge",
       sobrenome: "da Silva",
       email: "jorge.silva@dominian.com",
-      senha: "SfJo1h)Jk5{",
+      senha: "aaAA11{}",
       telefone: "11988881111",
-      cpf: "",
+      cpf: "52998224725",
       data_nascimento: ""
     }], {});
   },
 
   down: async (queryInterface, Sequelize) => {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    await queryInterface.bulkDelete('users', null, {});
   }
 };
