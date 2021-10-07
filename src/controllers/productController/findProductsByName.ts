@@ -1,29 +1,37 @@
  
 import { Op } from "sequelize";
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 import models from '../../models/';
 
 
 
-async function findProductsByName( req: Request, res: Response ) {
+async function findProductsByName( req: Request, res: Response, next: NextFunction ) {
     try {
         const { limit, offset, page, attributes, fields } = res.locals;
+        const { auth, user } = res.locals;
         const { name } = req.params;
 
-        const data = await models.Product.findAll({
+        const { rows: data, count } = await models.Product.findAndCountAll({
             where: typeof name === 'string'
                 ? { nome: { [Op.like]: `%${name}%` } }
                 : undefined,
-            limit, offset, attributes,
+            limit,
+            offset, 
+            attributes,
             include: fields.some( (f:string) => f==='category' ) 
                 ? { model: models.Category }
-                : undefined
+                : undefined,
+            raw: true,
+            nest: true
         });
 
-        return res.status(200).json({
-            limit, offset, page, term: name, data
-        });
+        res.locals = {
+            data, auth, user, term: name,
+            limit, offset, page, count
+        };
+
+        return next();
     } catch(err) {
         return res.status(503).json(err);
     }

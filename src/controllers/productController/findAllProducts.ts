@@ -1,26 +1,33 @@
 
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
+import { Includeable } from 'sequelize/types';
 
 import models from '../../models/';
 
 
 
-async function findAllProducts( req: Request, res: Response ) {
+async function findAllProducts( req: Request, res: Response, next: NextFunction ) {
     try {
         const { limit, offset, page, attributes, fields } = res.locals;
-        
-        const data = await models.Product.findAll({
+        const { auth, user } = res.locals;
+
+        const { rows: data, count } = await models.Product.findAndCountAll({
             limit,
             offset,
-            attributes,
+            attributes: [ 'id', ...attributes ],
             include: fields.some( (f:string) => f==='category' ) 
-                ? { model: models.Category }
-                : undefined
+                ? { model: models.Category } as Includeable
+                : undefined,
+            raw: true,
+            nest: true
         });
 
-        return res.status(200).json({
-            limit, offset, page, data
-        });
+        res.locals = {
+            data, auth, user,
+            limit, offset, page, count
+        };
+
+        return next();
     } catch(err) {
         return res.status(503).json(err);
     }

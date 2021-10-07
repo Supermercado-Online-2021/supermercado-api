@@ -14,7 +14,9 @@ async function findProductByPk( req: Request, res: Response ) {
             attributes,
             include: fields.some( (f:string) => f==='category' ) 
                 ? { model: models.Category }
-                : undefined
+                : undefined,
+            raw: true,
+            nest: true
         });
 
         if(!data) {
