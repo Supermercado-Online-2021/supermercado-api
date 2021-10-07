@@ -1,5 +1,5 @@
 
-import cryptographyPassword from '../../util/cryptographyPassword';
+import {cryptographyPassword} from '../../util/cryptographyPassword';
 import { Request, Response } from 'express'
 import models from '../../models/'
 

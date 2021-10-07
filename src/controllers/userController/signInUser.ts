@@ -1,30 +1,36 @@
 
+import { sign } from '../../util/authentication';
 import { Request, Response } from 'express';
 
 import models from '../../models';
 
-import cryptographyPassword from '../../util/cryptographyPassword';
+import { comparePassword } from '../../util/cryptographyPassword';
 
 
 
 async function signInUser( req: Request, res: Response ) {
     try {
-        const { email } = req.body;
-
-        const password = await cryptographyPassword( req.body.senha );
+        const { senha, email } = req.body;
 
         const user = await models.User.findOne({
-            where: {
-                senha: password, 
-                email
-            }
+            where: { email },
+            attributes: [ 'id','email','senha' ]
         });
         
-        if(user) {
-            return res.status(200).json({ 
-                auth: true,
-                user
-            });
+        if( user ) {
+            const validate = await comparePassword( senha, user.getDataValue('senha') )
+            if(validate) {
+                const token = await sign({ email, id: user.getDataValue('id') });
+
+                return res.status(200).json({ 
+                    auth: true,
+                    token,
+                    user: {
+                        id: user.getDataValue('id'),
+                        email: user.getDataValue('email')
+                    }
+                });
+            }
         }
 
         return res.status(401).json({
