@@ -7,14 +7,14 @@ import models from '../../models/'
 
 async function insertUser( req: Request, res: Response ) {
     try {
-        const { email, senha, cpf } = req.body;
-        const { nome, sobrenome, telefone, data_nascimento } = req.body;
+        const { email, password, cpf } = req.body;
+        const { name, last_name, phone, birthday } = req.body;
 
-        const password = await cryptographyPassword(senha);
+        const cryptPassword = await cryptographyPassword(password);
 
         const result = await models.User.create({
-            email, senha: password, cpf,
-            nome, sobrenome, telefone, data_nascimento
+            email, password: cryptPassword, cpf,
+            name, last_name, phone, birthday
         }); 
 
         return res.status(201).json(result);

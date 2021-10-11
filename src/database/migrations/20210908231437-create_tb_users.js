@@ -9,11 +9,11 @@ module.exports = {
                 allowNull: false,
                 autoIncrement: true,
             },
-            nome: {
+            name: {
                 type: Sequelize.STRING(25),
                 allowNull: false,
             },
-            sobrenome: {
+            last_name: {
                 type: Sequelize.STRING(75),
                 allowNull: false,
             },
@@ -21,11 +21,11 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            senha: {
+            password: {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            telefone: {
+            phone: {
                 type: Sequelize.STRING(11),
                 allowNull: false,
             },
@@ -33,14 +33,14 @@ module.exports = {
                 type: Sequelize.STRING(11),
                 allowNull: false,
             },
-            data_nascimento: {
+            birthday: {
                 type: Sequelize.DATE,
                 allowNull: false,
             }
         })
 
         await queryInterface.addConstraint('users', {
-            fields: [ 'email', 'telefone', 'cpf' ],
+            fields: [ 'email', 'phone', 'cpf' ],
             type: 'unique'
         });
     },

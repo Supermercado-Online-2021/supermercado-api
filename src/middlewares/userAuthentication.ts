@@ -38,15 +38,24 @@ async function userAuthMiddleware( req: Request, res: Response, next: NextFuncti
 export async function opcionalAuthUserMiddleware( req: Request, res: Response, next: NextFunction ) {
     try {
         const { token } = req.headers;
+    
+        if(token) {
+            const { id } = await verify<UserToken>( String(token) );
+            const user = await models.User.findByPk(id);
 
-        const { id } = await verify<UserToken>( String(token) );
-        const user = await models.User.findByPk(id);
+            res.locals = {
+                ...res.locals,
+                auth: true,
+                user
+            };
 
-        res.locals = {
-            ...res.locals,
-            auth: true,
-            user
-        };
+        } else {
+            res.locals = {
+                auth: false
+            }
+        }
+
+        return next();
     } catch(err) {
         res.locals = {
             ...res.locals,

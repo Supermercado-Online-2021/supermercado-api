@@ -14,7 +14,7 @@ async function findProductsByName( req: Request, res: Response, next: NextFuncti
 
         const { rows: data, count } = await models.Product.findAndCountAll({
             where: typeof name === 'string'
-                ? { nome: { [Op.like]: `%${name}%` } }
+                ? { name: { [Op.like]: `%${name}%` } }
                 : undefined,
             limit,
             offset, 

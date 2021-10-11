@@ -11,15 +11,15 @@ const Product = sequelize.define( 'Product', {
         allowNull: false,
         autoIncrement: true,
     },
-    nome: {
+    name: {
         type: DataTypes.STRING(50),
         allowNull: false
     },
-    preco: {
+    price: {
         type: DataTypes.DECIMAL(4,2),
         allowNull: false
     },
-    quantidade: {
+    amount: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
@@ -27,7 +27,7 @@ const Product = sequelize.define( 'Product', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    codigo_barras: {
+    code_bar: {
         type: DataTypes.STRING,
         allowNull: false
     },

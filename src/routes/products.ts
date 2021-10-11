@@ -16,31 +16,30 @@ const router = express.Router();
 const defaultMiddlewares = [
     opcionalAuthUserMiddleware,
     validateProductAttributes,
-]
-
-
+    validatePagination,
+];
 
 router.get( '/product/:id', 
+    opcionalAuthUserMiddleware,
+    validateProductAttributes,
     productController.findProductByPk, 
-    userProductRelationshipMiddleware );
+    userProductRelationshipMiddleware
+);
 
 router.get( '/products', 
-    ...defaultMiddlewares, 
-    validatePagination, 
+    ...defaultMiddlewares,  
     productController.findAllProducts, 
     userProductRelationshipMiddleware 
 );
 
 router.get( '/products/category/:category_id', 
-    ...defaultMiddlewares, 
-    validatePagination, 
+    ...defaultMiddlewares,  
     productController.findProductsByCategory,
     userProductRelationshipMiddleware 
 );
 
 router.get( '/products/name/:name', 
-    ...defaultMiddlewares, 
-    validatePagination, 
+    ...defaultMiddlewares,  
     productController.findProductsByName, 
     userProductRelationshipMiddleware 
 );

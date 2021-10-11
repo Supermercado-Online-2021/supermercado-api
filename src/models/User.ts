@@ -11,11 +11,11 @@ const User = sequelize.define( 'User', {
         allowNull: false,
         autoIncrement: true,
     },
-    nome: {
+    name: {
         type: DataTypes.STRING(25),
         allowNull: false,
     },
-    sobrenome: {
+    last_name: {
         type: DataTypes.STRING(75),
         allowNull: false,
     },
@@ -23,11 +23,11 @@ const User = sequelize.define( 'User', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    senha: {
+    password: {
         type: DataTypes.STRING(32),
         allowNull: false,
     },
-    telefone: {
+    phone: {
         type: DataTypes.STRING(11),
         allowNull: false,
     },
@@ -35,7 +35,7 @@ const User = sequelize.define( 'User', {
         type: DataTypes.STRING(11),
         allowNull: false,
     },
-    data_nascimento: {
+    birthday: {
         type: DataTypes.DATE,
         allowNull: false,
     }

@@ -6,7 +6,7 @@ const data = require('./../data.json');
 
 const randomCodeBar = () => {
   let codebar = '';
-  for( let i = 0; i < 10; i++ ) {
+  for( let i = 0; i < 40; i++ ) {
     codebar += random(0, 9);
   }
   return codebar;
@@ -16,8 +16,8 @@ const random = ( min, max ) => Math.floor( Math.random() * (max-min) ) + min;
 
 function factoryProduct(product) {
   return {
-    quantidade: random(5, 200),
-    codigo_barras: randomCodeBar(),
+    amount: random(5, 200),
+    code_bar: randomCodeBar(),
     ...product
   }
 }
@@ -27,8 +27,16 @@ function factoryProduct(product) {
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const products = data.map( product => factoryProduct(product) );
+    const randomProducts = [];
 
-    return await queryInterface.bulkInsert( 'products', products, {}); 
+    while(products.length > 0) {
+      const index = Math.floor( Math.random() * products.length );
+      randomProducts.push( products[index] );
+
+      products.splice( index, 1 );
+    }
+
+    return await queryInterface.bulkInsert( 'products', randomProducts, {}); 
   },
 
   down: async (queryInterface, Sequelize) => {

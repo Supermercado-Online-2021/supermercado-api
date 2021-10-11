@@ -10,15 +10,15 @@ import { comparePassword } from '../../util/cryptographyPassword';
 
 async function signInUser( req: Request, res: Response ) {
     try {
-        const { senha, email } = req.body;
+        const { password, email } = req.body;
 
         const user = await models.User.findOne({
             where: { email },
-            attributes: [ 'id','email','senha' ]
+            attributes: [ 'id','email','password' ]
         });
         
         if( user ) {
-            const validate = await comparePassword( senha, user.getDataValue('senha') )
+            const validate = await comparePassword( password, user.getDataValue('password') )
             if(validate) {
                 const token = await sign({ email, id: user.getDataValue('id') });
 

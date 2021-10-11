@@ -9,15 +9,15 @@ module.exports = {
                 allowNull: false,
                 autoIncrement: true,
             },
-            nome: {
+            name: {
                 type: Sequelize.STRING,
                 allowNull: false
             },
-            preco: {
+            price: {
                 type: Sequelize.DECIMAL(6,2),
                 allowNull: false
             },
-            quantidade: {
+            amount: {
                 type: Sequelize.INTEGER,
                 allowNull: false
             },
@@ -25,7 +25,7 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false
             },
-            codigo_barras: {
+            code_bar: {
                 type: Sequelize.STRING,
                 allowNull: false
             },
@@ -40,7 +40,7 @@ module.exports = {
         }),
 
         await queryInterface.addConstraint( 'products', {
-            fields: [ 'codigo_barras' ],
+            fields: [ 'code_bar' ],
             type: 'unique'
         });
     },

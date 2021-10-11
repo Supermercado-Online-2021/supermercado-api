@@ -5,11 +5,11 @@ import Category from "./Category";
 
 export default interface Product {
     id ?: number,
-    nome ?: string,
-    preco ?: number,
-    quantidade ?: number,
+    name ?: string,
+    price ?: number,
+    amount ?: number,
     image_src ?: string,
-    codigo_barras ?: string,
+    code_bar ?: string,
     category_id ?: number,
     favorite ?: boolean,
     Category ?: Category

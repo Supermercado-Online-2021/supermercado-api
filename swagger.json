@@ -7,10 +7,12 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000/api"
+      "url": "http://localhost:3000/api",
+      "description": "Servidor local de testes."
     },
     {
-      "url": "https://supermercado-online-api.herokuapp.com/api/"
+      "url": "https://supermercado-online-api.herokuapp.com/api/",
+      "description": "Servidor de produção"
     }
   ],
   "tags": [
@@ -20,11 +22,15 @@
     },
     {
       "name": "Usuário",
-      "description": "Buscar usuários"
+      "description": "Manipular conta do usuário"
     },
     {
       "name": "Categorias",
       "description": "Buscar categorias"
+    },
+    {
+      "name": "Favoritos",
+      "description": "Manipular favoritos do usuário"
     }
   ],
   "paths": {
@@ -36,6 +42,9 @@
         "summary": "Retorna o produto pelo id",
         "description": "Retorna o produto pelo id",
         "parameters": [
+          {
+            "$ref": "#components/parameters/OpcionalToken"
+          },
           {
             "name": "id",
             "in": "path",
@@ -84,6 +93,9 @@
         "description": "Retorna uma array de produtos",
         "parameters": [
           {
+            "$ref": "#components/parameters/OpcionalToken"
+          },
+          {
             "$ref": "#/components/parameters/Pagination"
           },
           {
@@ -117,12 +129,64 @@
         "description": "Retorna os produtos de uma categoria específica",
         "parameters": [
           {
+            "$ref": "#components/parameters/OpcionalToken"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "ID da categoria que deseja buscar",
             "required": true,
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Pagination"
+          },
+          {
+            "$ref": "#/components/parameters/ReturnLimit"
+          },
+          {
+            "$ref": "#/components/parameters/NamesAttributes"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductsWithPagination"
+          },
+          "400": {
+            "description": "Não foi possível completar a requisição, verifique se os parametros foram inseridos corretamente.",
+            "content": {}
+          },
+          "404": {
+            "description": "Produto não encontrado.",
+            "content": {}
+          },
+          "500": {
+            "description": "Erro no serviço",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/products/name/{name}": {
+      "get": {
+        "tags": [
+          "Produtos"
+        ],
+        "summary": "Retorna uma array de produtos que contêm parte do nome",
+        "description": "Retorna uma array de produtos que contêm parte do nome",
+        "parameters": [
+          {
+            "$ref": "#components/parameters/OpcionalToken"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "Parte do nome do produto que deseja buscar",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -186,7 +250,7 @@
         }
       }
     },
-    "/register/user/": {
+    "/user/register/": {
       "post": {
         "tags": [
           "Usuário"
@@ -199,36 +263,36 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "nome": {
+                  "name": {
                     "type": "string"
                   },
-                  "sobrenome": {
+                  "last_name": {
                     "type": "string"
                   },
                   "email": {
                     "type": "string"
                   },
-                  "senha": {
+                  "password": {
                     "type": "string"
                   },
-                  "telefone": {
+                  "phone": {
                     "type": "string"
                   },
                   "cpf": {
                     "type": "string"
                   },
-                  "data_nascimento": {
+                  "birthday": {
                     "type": "string"
                   }
                 },
                 "required": [
-                  "nome",
-                  "sobrenome",
+                  "name",
+                  "last_name",
                   "email",
-                  "senha",
-                  "telefone",
+                  "password",
+                  "phone",
                   "cpf",
-                  "data_nascimento"
+                  "birthday"
                 ]
               }
             }
@@ -272,13 +336,13 @@
                   "email": {
                     "type": "string"
                   },
-                  "senha": {
+                  "password": {
                     "type": "string"
                   }
                 },
                 "required": [
-                  "nome",
-                  "senha"
+                  "name",
+                  "password"
                 ]
               }
             }
@@ -306,43 +370,128 @@
         }
       }
     },
-    "/products/name/{name}": {
-      "get": {
+    "/favorites/product/{product_id}": {
+      "post": {
         "tags": [
-          "Produtos"
+          "Favoritos"
         ],
-        "summary": "Retorna uma array de produtos que contêm parte do nome",
-        "description": "Retorna uma array de produtos que contêm parte do nome",
+        "summary": "Retorna o id correspondente ao produto favorito do usuário",
+        "description": "Retorna o id correspondente ao produto favorito do usuário",
         "parameters": [
           {
-            "name": "name",
+            "$ref": "#components/parameters/AuthToken"
+          },
+          {
+            "name": "product_id",
             "in": "path",
-            "description": "Parte do nome do produto que deseja buscar",
+            "description": "id do produto que deseja favoritar.",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Produto favoritado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
             }
           },
+          "401": {
+            "description": "Usuário não autenticado.",
+            "content": {}
+          },
+          "404": {
+            "description": "Produto favoritado não encontrado.",
+            "content": {}
+          },
+          "500": {
+            "description": "Erro no serviço",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/favorites/product/{id}": {
+      "delete": {
+        "tags": [
+          "Favoritos"
+        ],
+        "summary": "Retira um produto da lista de favoritos de um usuário.",
+        "description": "Retira um produto da lista de favoritos de um usuário.",
+        "parameters": [
           {
-            "$ref": "#/components/parameters/Pagination"
+            "$ref": "#components/parameters/AuthToken"
           },
           {
-            "$ref": "#/components/parameters/ReturnLimit"
+            "name": "id",
+            "in": "path",
+            "description": "id do produto que deseja remover da lista de favoritos.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produto removido com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário não autenticado.",
+            "content": {}
+          },
+          "404": {
+            "description": "Produto favoritado não encontrado.",
+            "content": {}
+          },
+          "500": {
+            "description": "Erro no serviço",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/favorites/user": {
+      "get": {
+        "tags": [
+          "Favoritos"
+        ],
+        "summary": "Retorna uma array com os produtos favoritados pelo usuário autenticado.",
+        "description": "Retorna uma array com os produtos favoritados pelo usuário autenticado.",
+        "parameters": [
+          {
+            "$ref": "#components/parameters/AuthToken"
           },
           {
-            "$ref": "#/components/parameters/NamesAttributes"
+            "$ref": "#components/parameters/Pagination"
+          },
+          {
+            "$ref": "#components/parameters/ReturnLimit"
           }
         ],
         "responses": {
           "200": {
             "$ref": "#/components/responses/ProductsWithPagination"
           },
-          "400": {
-            "description": "Não foi possível completar a requisição, verifique se os parametros foram inseridos corretamente.",
+          "401": {
+            "description": "Usuário não autenticado.",
             "content": {}
           },
           "404": {
-            "description": "Produto não encontrado.",
+            "description": "Produto favoritado não encontrado.",
             "content": {}
           },
           "500": {
@@ -371,6 +520,9 @@
                 "offset": {
                   "type": "integer"
                 },
+                "count": {
+                  "type": "integer"
+                },
                 "data": {
                   "type": "array",
                   "items": {
@@ -390,25 +542,25 @@
           "id": {
             "type": "integer"
           },
-          "nome": {
+          "name": {
             "type": "string"
           },
-          "sobrenome": {
+          "last_name": {
             "type": "string"
           },
           "email": {
             "type": "string"
           },
-          "senha": {
+          "password": {
             "type": "string"
           },
-          "telefone": {
+          "phone": {
             "type": "string"
           },
           "cpf": {
             "type": "string"
           },
-          "data_nascimento": {
+          "birthday": {
             "type": "string"
           }
         }
@@ -419,7 +571,7 @@
           "id": {
             "type": "integer"
           },
-          "nome": {
+          "name": {
             "type": "string"
           }
         }
@@ -430,19 +582,19 @@
           "id": {
             "type": "integer"
           },
-          "nome": {
+          "name": {
             "type": "string"
           },
-          "preco": {
+          "price": {
             "type": "number"
           },
-          "quantidade": {
+          "amount": {
             "type": "integer"
           },
           "image_src": {
             "type": "string"
           },
-          "codigo_barras": {
+          "code_bar": {
             "type": "string"
           },
           "category_id": {
@@ -452,9 +604,43 @@
             "$ref": "#/components/schemas/Categoria"
           }
         }
+      },
+      "Favorito": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "product_id": {
+            "type": "string"
+          },
+          "Product": {
+            "$ref": "#/components/schemas/Produto"
+          }
+        }
       }
     },
     "parameters": {
+      "OpcionalToken": {
+        "name": "token",
+        "in": "header",
+        "description": "Token de autenticação de usuário",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "AuthToken": {
+        "name": "token",
+        "in": "header",
+        "description": "Token de autenticação de usuário",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
       "ReturnLimit": {
         "name": "limit",
         "in": "query",

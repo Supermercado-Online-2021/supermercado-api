@@ -11,11 +11,11 @@ import validateEmail from './validateEmail';
 
 async function userValidationMiddleware ( req: Request, res: Response, next: NextFunction ) {
     try {
-        const { senha, cpf, email } = req.body;
+        const { password, cpf, email } = req.body;
 
         const validate = checkAllValidation([
             validateCPF(cpf),
-            validatePassword(senha),
+            validatePassword(password),
             validateEmail(email)
         ], '');
 
