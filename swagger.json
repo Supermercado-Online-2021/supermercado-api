@@ -370,6 +370,91 @@
         }
       }
     },
+    "/user/signout/": {
+      "post": {
+        "tags": [
+          "Usuário"
+        ],
+        "summary": "Desloga o usuário",
+        "description": "Desloga o usuário",
+        "parameters": [
+          {
+            "$ref": "#components/parameters/AuthToken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário deslogado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "auth": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "destroyed": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Não foi possível completar a requisição, verifique se os parametros foram inseridos corretamente.",
+            "content": {}
+          },
+          "500": {
+            "description": "Erro no serviço",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/user/logged/": {
+      "post": {
+        "tags": [
+          "Usuário"
+        ],
+        "summary": "Checar token do usuário",
+        "description": "Checar token do usuário",
+        "parameters": [
+          {
+            "$ref": "#components/parameters/AuthToken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário deslogado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "auth": {
+                      "type": "boolean"
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/Usuario"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Não foi possível completar a requisição, verifique se os parametros foram inseridos corretamente.",
+            "content": {}
+          },
+          "500": {
+            "description": "Erro no serviço",
+            "content": {}
+          }
+        }
+      }
+    },
     "/favorites/product/{product_id}": {
       "post": {
         "tags": [
