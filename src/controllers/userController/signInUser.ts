@@ -12,13 +12,15 @@ async function signInUser( req: Request, res: Response ) {
     try {
         const { password, email } = req.body;
 
+        console.log(password, email);
+
         const user = await models.User.findOne({
             where: { email },
             attributes: [ 'id','email','password' ]
         });
         
         if( user ) {
-            const validate = await comparePassword( password, user.getDataValue('password') )
+            const validate = await comparePassword( password, user.getDataValue('password') );
             if(validate) {
                 const token = await sign({ email, id: user.getDataValue('id') });
 
