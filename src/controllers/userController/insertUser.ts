@@ -13,7 +13,8 @@ async function insertUser( req: Request, res: Response ) {
         const cryptPassword = await cryptographyPassword(password);
 
         const result = await models.User.create({
-            email, password: cryptPassword, cpf,
+            email, cpf,
+            password: cryptPassword,
             name, last_name, phone, birthday
         }); 
 

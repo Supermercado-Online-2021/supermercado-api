@@ -5,7 +5,7 @@ import Validation from "../../types/Validation";
 const lowerCase = 'abcdefghijklmnopqrstuvwxyz';
 const upperCase = lowerCase.toUpperCase();
 const numbers = '0123456789';
-const characterSpecial = '[]{}()_-#%$';
+const characterSpecial = '[]{}()_-#%$@';
 
 
 
@@ -36,13 +36,13 @@ export const validatePasswordWithLowerCase = (password: string) =>
     validate( password, 1, lowerCase, 'Senha deve conter ao menos 1 letra minuscula.' ); 
 
 export const validatePasswordWithUpperCase = (password: string) =>
-    validate( password, 2, upperCase, 'Senha deve conter ao menos 2 letras maisculas.'  );
+    validate( password, 1, upperCase, 'Senha deve conter ao menos 1 letras maisculas.'  );
 
 export const validatePasswordWithNumbers = (password: string) =>
     validate( password, 1, numbers, 'Senha deve conter ao menos 1 número.' );
 
 export const validatePasswordWithCharacterSpecial= (password: string) =>
-    validate( password, 2, characterSpecial, `Senha deve conter ao menos 2 caracteres especiais: ${characterSpecial}` );
+    validate( password, 1, characterSpecial, `Senha deve conter ao menos 1 caracteres especiais: ${characterSpecial}` );
 
 
 
