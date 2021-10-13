@@ -1,12 +1,10 @@
 
-import addProductFavorites from "./addProductFavorites";
+import toggleProductFavorites from "./toggleProductFavorites";
 import findAllFavorites from "./findAllFavorites";
-import removeProductFavorites from "./removeProductFavorites";
 
 
 
 export default {
-    addProductFavorites,
+    toggleProductFavorites,
     findAllFavorites,
-    removeProductFavorites
 }

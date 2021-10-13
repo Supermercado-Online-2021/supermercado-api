@@ -9,8 +9,7 @@ import validatePagination from '../middlewares/validatePagination';
 
 const router = express.Router();
 
-router.post( '/favorites/product/:product_id', userAuthMiddleware, favoriteController.addProductFavorites );
-router.delete( '/favorites/product/:id', userAuthMiddleware, favoriteController.removeProductFavorites );
+router.post( '/favorites/product/:product_id', userAuthMiddleware, favoriteController.toggleProductFavorites );
 router.get( '/favorites/user', userAuthMiddleware, validatePagination, favoriteController.findAllFavorites );
 
 

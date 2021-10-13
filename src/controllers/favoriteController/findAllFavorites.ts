@@ -10,7 +10,7 @@ async function findAllFavorites( req: Request, res: Response ) {
         const { limit, offset, page } = res.locals;
         const { id } = res.locals.user;
 
-        const favorites = await models.Favorite.findAll({
+        const { rows: data, count } = await models.Favorite.findAndCountAll({
             where: { user_id: id },
             limit, offset,
             include: {
@@ -18,13 +18,9 @@ async function findAllFavorites( req: Request, res: Response ) {
             }
         });
 
-        const count = await models.Favorite.count({
-            where: { user_id: id }
-        });
-
         return res.status(200).json({
             limit, offset, page, count,
-            favorites
+            data
         });
     }catch(err) {
         return res.status(500).json(err);
