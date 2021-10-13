@@ -15,8 +15,7 @@ async function signInUser( req: Request, res: Response ) {
         console.log(password, email);
 
         const user = await models.User.findOne({
-            where: { email },
-            attributes: [ 'id','email','password' ]
+            where: { email }
         });
         
         if( user ) {
@@ -29,7 +28,11 @@ async function signInUser( req: Request, res: Response ) {
                     token,
                     user: {
                         id: user.getDataValue('id'),
-                        email: user.getDataValue('email')
+                        email: user.getDataValue('email'),
+                        name: user.getDataValue('name'),
+                        last_name: user.getDataValue('last_name'),
+                        phone: user.getDataValue('phone'),
+                        birthday: user.getDataValue('birthday')
                     }
                 });
             }
