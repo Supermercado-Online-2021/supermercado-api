@@ -63,15 +63,15 @@ export const validateCPFLength = (cpf: string): Validation => {
         pass: validate,
         message: validate
             ? "Tamanho do cpf válido"
-            : "Tamanho do cpf inválido"
+            : "CPF com tamanho inválido, informe todos os 11 digitos do ceu CPF"
     }
 }
 
 export const validateFirstVerificationDigit = (cpf: number[]) =>
-    validate( cpf, 10, 'Primeiro digito de validação inválido' );
+    validate( cpf, 10, 'CPF inválido, verifique se todos os digitos correspondem ao seu cpf' );
 
 export const validateSecondVerificationDigit = (cpf: number[]) =>
-    validate( cpf, 11, 'Segundo digito de validação inválido' );
+    validate( cpf, 11, 'CPF inválido, verifique se todos os digitos correspondem ao seu cpf' );
 
 
 

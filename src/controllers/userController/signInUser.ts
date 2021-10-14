@@ -11,9 +11,7 @@ import { comparePassword } from '../../util/cryptographyPassword';
 async function signInUser( req: Request, res: Response ) {
     try {
         const { password, email } = req.body;
-
-        console.log(password, email);
-
+        
         const user = await models.User.findOne({
             where: { email }
         });
@@ -32,6 +30,7 @@ async function signInUser( req: Request, res: Response ) {
                         name: user.getDataValue('name'),
                         last_name: user.getDataValue('last_name'),
                         phone: user.getDataValue('phone'),
+                        cpf: user.getDataValue('cpf'),
                         birthday: user.getDataValue('birthday')
                     }
                 });

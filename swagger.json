@@ -460,8 +460,8 @@
         "tags": [
           "Favoritos"
         ],
-        "summary": "Retorna o id correspondente ao produto favorito do usuário",
-        "description": "Retorna o id correspondente ao produto favorito do usuário",
+        "summary": "Adiciona ou remove um produto da lista de desejos do usuário.",
+        "description": "Adiciona ou remove um produto da lista de desejos do usuário.",
         "parameters": [
           {
             "$ref": "#components/parameters/AuthToken"
@@ -487,45 +487,8 @@
               }
             }
           },
-          "401": {
-            "description": "Usuário não autenticado.",
-            "content": {}
-          },
-          "404": {
-            "description": "Produto favoritado não encontrado.",
-            "content": {}
-          },
-          "500": {
-            "description": "Erro no serviço",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/favorites/product/{id}": {
-      "delete": {
-        "tags": [
-          "Favoritos"
-        ],
-        "summary": "Retira um produto da lista de favoritos de um usuário.",
-        "description": "Retira um produto da lista de favoritos de um usuário.",
-        "parameters": [
-          {
-            "$ref": "#components/parameters/AuthToken"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "id do produto que deseja remover da lista de favoritos.",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
           "200": {
-            "description": "Produto removido com sucesso",
+            "description": "Produto desfavoritado com sucesso",
             "content": {
               "application/json": {
                 "schema": {

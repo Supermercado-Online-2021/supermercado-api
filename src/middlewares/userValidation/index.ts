@@ -41,9 +41,9 @@ async function userValidationMiddleware ( req: Request, res: Response, next: Nex
                     field: 'email',
                     message: registerUser.getDataValue('email') === email
                         ? "Email já cadastrado"
-                        : registerUser.getDataValue('cpf') 
-                            ? "Telefone já cadastrado"
-                            : "CPF já cadastrado"
+                        : registerUser.getDataValue('cpf') === cpf
+                            ? "CPF já cadastrado"
+                            :  registerUser.getDataValue('phone') === phone ? "Telefone já cadastrado": "Usuário já cadastrado"
                 });
             }
         }
