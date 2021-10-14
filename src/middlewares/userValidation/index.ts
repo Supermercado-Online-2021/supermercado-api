@@ -18,6 +18,8 @@ async function userValidationMiddleware ( req: Request, res: Response, next: Nex
     try {
         const { password, cpf, email, phone } = req.body;
 
+        console.log(cpf, phone)
+
         const validate = checkAllValidation([
             validateCPF(cpf),
             validatePassword(password),
@@ -41,9 +43,9 @@ async function userValidationMiddleware ( req: Request, res: Response, next: Nex
                     field: 'email',
                     message: registerUser.getDataValue('email') === email
                         ? "Email já cadastrado"
-                        : registerUser.getDataValue('cpf') 
-                            ? "Telefone já cadastrado"
-                            : "CPF já cadastrado"
+                        : registerUser.getDataValue('cpf') === cpf
+                            ? "CPF já cadastrado"    
+                            : "Telefone já cadastrado"
                 });
             }
         }
