@@ -31,6 +31,10 @@
     {
       "name": "Favoritos",
       "description": "Manipular favoritos do usuário"
+    },
+    {
+      "name": "Endereços",
+      "description": "Manipular endereços do usuário"
     }
   ],
   "paths": {
@@ -93,7 +97,7 @@
         "description": "Retorna uma array de produtos",
         "parameters": [
           {
-            "$ref": "#components/parameters/OpcionalToken"
+            "$ref": "#/components/parameters/OpcionalToken"
           },
           {
             "$ref": "#/components/parameters/Pagination"
@@ -548,6 +552,196 @@
           }
         }
       }
+    },
+    "/addresses": {
+      "post": {
+        "tags": [
+          "Endereços"
+        ],
+        "summary": "Cadastra um novo endereço",
+        "description": "Cadastra um novo endereço",
+        "parameters": [
+          {
+            "$ref": "#components/parameters/AuthToken"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cep": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "number": {
+                    "type": "integer"
+                  },
+                  "complement": {
+                    "type": "string"
+                  },
+                  "references": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name", 
+                  "cpf",
+                  "cep", 
+                  "number",
+                  "complement"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Endereço cadastrado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Endereço"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos",
+            "content": {}
+          },
+          "401": {
+            "description": "Usuário não autenticado.",
+            "content": {}
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Endereços"
+        ],
+        "description": "Retorna todos os endereços de um usuário.",
+        "summary": "Retorna todos os endereços de um usuário.",
+        "parameters": [
+          { "$ref": "#/components/parameters/AuthToken" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Endereços encontrados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Endereço"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/addresses/{id}": {
+      "put": {
+        "tags": [
+          "Endereços"
+        ],
+        "summary": "Atualizar informações do cadastro.",
+        "description": "Atualizar informações do cadastro.",
+        "parameters": [
+          {
+            "$ref": "#components/parameters/AuthToken"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cep": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "number": {
+                    "type": "integer"
+                  },
+                  "complement": {
+                    "type": "string"
+                  },
+                  "references": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name", 
+                  "cpf",
+                  "cep", 
+                  "number",
+                  "complement"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Endereço cadastrado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Endereço"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos",
+            "content": {}
+          },
+          "401": {
+            "description": "Usuário não autenticado.",
+            "content": {}
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Endereços"
+        ],
+        "description": "Retorna todos os endereços de um usuário.",
+        "summary": "Retorna todos os endereços de um usuário.",
+        "parameters": [
+          { "$ref": "#/components/parameters/AuthToken" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Endereços encontrados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Endereço"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -584,6 +778,35 @@
       }
     },
     "schemas": {
+      "Endereço": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "cep": {
+            "type": "string"
+          },
+          "number": {
+            "type": "integer"
+          },
+          "complement": {
+            "type": "string"
+          },
+          "references": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "integer"
+          }
+        }
+      },
       "Usuario": {
         "type": "object",
         "properties": {
