@@ -51,4 +51,10 @@ const validateQuery = (allowedAttributes: string[]): RequestHandler =>
 
 
 const productAttributes = Object.keys(models.Product.rawAttributes);
-export const validateProductAttributes = validateQuery([ 'id', ...productAttributes]);
+const userAttributes = Object.keys(models.User.rawAttributes);
+const cardAttributes = Object.keys(models.Card.rawAttributes);
+
+
+export const validateProductAttributes = validateQuery([...productAttributes]);
+export const validateUserAttributes = validateQuery([...userAttributes]);
+export const validateCardAttributes = validateQuery([...cardAttributes]);
