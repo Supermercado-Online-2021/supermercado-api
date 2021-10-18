@@ -6,24 +6,28 @@ import models from '../../models';
 
 
 async function removeAddress( req: Request, res: Response ) {
-    const {id} = req.params;
-    const { user } = res.locals;
+    try{
+        const {id} = req.params;
+        const { user } = res.locals;
 
-    const address = await models.Address.findOne({
-        where: {
-            id,
-            user_id: user.id
+        const address = await models.Address.findOne({
+            where: {
+                id,
+                user_id: user.id
+            }
+        });
+        
+        if(address) {
+            const destroy = await address.destroy();
+            return res.status(200).json(destroy);
         }
-    });
-    
-    if(address) {
-        address.destroy();
-        return res.status(200).json(address);
-    }
 
-    return res.status(404).json({
-        message: "Endereço não encontrado"
-    })
+        return res.status(404).json({
+            message: "Endereço não encontrado"
+        });
+    }catch(err) {
+        return res.status(500).json(err);
+    }
 }
 
 export default removeAddress;
