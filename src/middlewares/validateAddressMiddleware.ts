@@ -7,10 +7,10 @@ import validationCPF from '../middlewares/userValidation/validateCPF';
 
 
 export interface ViaCepResult {
-    logradouro: "Rua Ernest Renam",
-    bairro: "Paraisópolis",
-    localidade: "São Paulo",
-    uf: "SP",
+    logradouro: string,
+    bairro: string,
+    localidade: string,
+    uf: string,
     erro?: boolean
 }
 
@@ -31,7 +31,7 @@ async function validationCEP (cep: string): Promise<boolean> {
 async function validateAddressMiddleware( req: Request, res: Response, next: NextFunction ) {
     const { cpf, cep } = req.body;
 
-    const validateCEP = validationCEP(cep);
+    const validateCEP = await validationCEP(cep);
     const validateCPF = validationCPF(cpf);
 
     if(!validateCEP)
