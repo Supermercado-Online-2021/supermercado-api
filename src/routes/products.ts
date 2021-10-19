@@ -6,7 +6,7 @@ import productController from '../controllers/productController/';
 import validatePagination from '../middlewares/validatePagination';
 import { validateProductAttributes } from '../middlewares/validateAttributes';
 import { opcionalAuthUserMiddleware } from '../middlewares/userAuthentication';
-import userProductRelationshipMiddleware from '../middlewares/userProductRelationship';
+import userProductIncludeMiddleware from '../middlewares/userProductIncludeMiddleware';
 
 
 
@@ -17,31 +17,28 @@ const defaultMiddlewares = [
     opcionalAuthUserMiddleware,
     validateProductAttributes,
     validatePagination,
+    userProductIncludeMiddleware
 ];
 
 router.get( '/product/:id', 
     opcionalAuthUserMiddleware,
     validateProductAttributes,
-    productController.findProductByPk, 
-    userProductRelationshipMiddleware
+    productController.findProductByPk
 );
 
 router.get( '/products', 
     ...defaultMiddlewares,  
-    productController.findAllProducts, 
-    userProductRelationshipMiddleware 
+    productController.findAllProducts 
 );
 
 router.get( '/products/category/:category_id', 
     ...defaultMiddlewares,  
-    productController.findProductsByCategory,
-    userProductRelationshipMiddleware 
+    productController.findProductsByCategory 
 );
 
 router.get( '/products/name/:name', 
     ...defaultMiddlewares,  
-    productController.findProductsByName, 
-    userProductRelationshipMiddleware 
+    productController.findProductsByName 
 );
 
 
