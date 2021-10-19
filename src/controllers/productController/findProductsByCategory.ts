@@ -9,27 +9,23 @@ async function findProductsByCategory( req: Request, res: Response, next: NextFu
     try {
         const { category_id } = req.params;
         const { limit, offset, page, attributes, fields } = res.locals;
-        const { auth, user } = res.locals;
+        const { auth, user, include } = res.locals;
 
         const { rows: data, count } = await models.Product.findAndCountAll({
             where: { category_id },
             limit,
             offset,
             attributes: [ 'id', ...attributes ],
-            include: fields.some( (f:string) => f==='category' ) 
-                ? { model: models.Category }
-                : undefined,
+            include,
             raw: true,
             nest: true
         });
 
 
-        res.locals = {
+        return res.status(200).json({
             data, auth, user,
             limit, offset, page, count
-        };
-
-        return next();
+        });
     } catch(err) {
         return res.status(503).json(err);
     }

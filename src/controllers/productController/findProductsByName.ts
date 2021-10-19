@@ -9,7 +9,7 @@ import models from '../../models/';
 async function findProductsByName( req: Request, res: Response, next: NextFunction ) {
     try {
         const { limit, offset, page, attributes, fields } = res.locals;
-        const { auth, user } = res.locals;
+        const { auth, user, include } = res.locals;
         const { name } = req.params;
 
         const { rows: data, count } = await models.Product.findAndCountAll({
@@ -19,19 +19,15 @@ async function findProductsByName( req: Request, res: Response, next: NextFuncti
             limit,
             offset, 
             attributes,
-            include: fields.some( (f:string) => f==='category' ) 
-                ? { model: models.Category }
-                : undefined,
+            include,
             raw: true,
             nest: true
         });
 
-        res.locals = {
-            data, auth, user, term: name,
-            limit, offset, page, count
-        };
-
-        return next();
+        return res.status(200).json({
+            data, auth, user,
+            limit, offset, page, count, term: name
+        });
     } catch(err) {
         return res.status(503).json(err);
     }
