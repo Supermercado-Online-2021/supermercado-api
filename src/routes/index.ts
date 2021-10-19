@@ -10,6 +10,8 @@ import products from './products';
 
 import cards from './cards';
 
+import cart from './cart';
+
 
 
 const router = express.Router();
@@ -20,6 +22,7 @@ router.use(products);
 router.use(favorites);
 router.use(address);
 router.use(cards);
+router.use(cart);
 
 
 
