@@ -12,11 +12,20 @@ async function addProduct( req: Request, res: Response ) {
         const { id: user_id } = res.locals.user;
 
         const product = await models.Product.findByPk(product_id);
-
         if( amount > product?.getDataValue('amount'))
             return res.status(400).json({
                 message: 'Quantidade não disponível em estoque.'
             });
+
+        const cartExists = await models.Cart.findOne({
+            where: { product_id, user_id }
+        });
+
+        if( cartExists ) {
+            return res.status(400).json({
+                message: 'Produto já está na lista.'
+            });
+        }
         
         const cart = await models.Cart.create({
             product_id,
