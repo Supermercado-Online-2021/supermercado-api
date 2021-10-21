@@ -20,7 +20,11 @@ async function toggleProductFavorites( req: Request, res: Response ) {
         if( findFavoritedProduct ) {
             findFavoritedProduct.destroy();
 
-            return res.status(200).json(findFavoritedProduct);
+            return res.status(200).json({
+                id: null,
+                product_id: null,
+                user_id: null
+            });
         } else {
             const favorite = await models.Favorite.create({
                 user_id: id,
