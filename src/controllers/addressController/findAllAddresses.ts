@@ -36,7 +36,7 @@ const mergeData = (data: Model<any,any>) =>
 async function findAllAddresses( req: Request, res: Response ) {
     const { id } = res.locals.user;
 
-    const addresses = await models.Address.findAll({
+    const result = await models.Address.findAll({
         where: {
             user_id: id 
         },
@@ -44,8 +44,8 @@ async function findAllAddresses( req: Request, res: Response ) {
         nest: true
     });
 
-    // const promises = result.map( address => mergeData(address) );
-    // const addresses = await Promise.all(promises);
+    const promises = result.map( address => mergeData(address) );
+    const addresses = await Promise.all(promises);
 
     return res.status(200).json(addresses);
 }
