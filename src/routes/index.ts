@@ -3,7 +3,7 @@ import express from 'express';
 
 import users from './users';
 import favorites from './favorites';
-import address from './addresses';
+import addresses from './addresses';
 
 import categories from './categories';
 import products from './products';
@@ -20,7 +20,7 @@ router.use(users);
 router.use(categories);
 router.use(products);
 router.use(favorites);
-router.use(address);
+router.use(addresses);
 router.use(cards);
 router.use(cart);
 
