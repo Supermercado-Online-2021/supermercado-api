@@ -44,10 +44,10 @@ async function findAllAddresses( req: Request, res: Response ) {
         nest: true
     });
 
-    const promises = result.map( address => mergeData(address) );
-    const addresses = await Promise.all(promises);
+    // const promises = result.map( address => mergeData(address) );
+    // const addresses = await Promise.all(promises);
 
-    return res.status(200).json(addresses);
+    return res.status(200).json(result);
 }
 
 export default findAllAddresses;
