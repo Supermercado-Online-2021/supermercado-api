@@ -10,6 +10,7 @@ const router = express.Router();
 
 router.post( '/addresses', userAuthMiddleware, addressController.insertAddress );
 router.get( '/addresses', userAuthMiddleware, addressController.findAllAddresses );
+router.get( '/addresses/:id', userAuthMiddleware, addressController.findOne );
 router.put( '/addresses/:id', userAuthMiddleware, addressController.updateAddress );
 router.delete( '/addresses/:id', userAuthMiddleware, addressController.removeAddress );
 
