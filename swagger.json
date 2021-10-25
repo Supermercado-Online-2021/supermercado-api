@@ -656,8 +656,15 @@
         "summary": "Atualizar informações do cadastro.",
         "description": "Atualizar informações do cadastro.",
         "parameters": [
+          {"$ref": "#components/parameters/AuthToken"},
           {
-            "$ref": "#components/parameters/AuthToken"
+            "name": "id",
+            "in": "path",
+            "description": "id do produto que deseja atualizar.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "requestBody": {
@@ -724,7 +731,16 @@
         "description": "Retorna todos os endereços de um usuário.",
         "summary": "Retorna todos os endereços de um usuário.",
         "parameters": [
-          { "$ref": "#/components/parameters/AuthToken" }
+          { "$ref": "#/components/parameters/AuthToken" },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id do endereço que deseja remover.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
         ],
         "responses": {
           "200": {
