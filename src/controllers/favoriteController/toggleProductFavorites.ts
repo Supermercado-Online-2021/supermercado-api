@@ -31,7 +31,7 @@ async function toggleProductFavorites( req: Request, res: Response ) {
                 product_id
             });
     
-            res.status(201).json(favorite);
+            return res.status(201).json(favorite);
         }
     } catch(err) {
         return res.status(500).json(err);

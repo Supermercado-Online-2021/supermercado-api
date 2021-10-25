@@ -30,7 +30,7 @@ async function userAuthMiddleware( req: Request, res: Response, next: NextFuncti
     } catch(err) {
         return res.status(401).json({
             auth: false, 
-            err
+            message: "Usuário não autenticado."
         });
     } 
 }

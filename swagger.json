@@ -47,7 +47,7 @@
         "description": "Retorna o produto pelo id",
         "parameters": [
           {
-            "$ref": "#components/parameters/OpcionalToken"
+            "$ref": "#/components/parameters/OpcionalToken"
           },
           {
             "name": "id",
@@ -133,7 +133,7 @@
         "description": "Retorna os produtos de uma categoria específica",
         "parameters": [
           {
-            "$ref": "#components/parameters/OpcionalToken"
+            "$ref": "#/components/parameters/OpcionalToken"
           },
           {
             "name": "id",
@@ -182,7 +182,7 @@
         "description": "Retorna uma array de produtos que contêm parte do nome",
         "parameters": [
           {
-            "$ref": "#components/parameters/OpcionalToken"
+            "$ref": "#/components/parameters/OpcionalToken"
           },
           {
             "name": "name",
@@ -383,7 +383,7 @@
         "description": "Desloga o usuário",
         "parameters": [
           {
-            "$ref": "#components/parameters/AuthToken"
+            "$ref": "#/components/parameters/AuthToken"
           }
         ],
         "responses": {
@@ -426,7 +426,7 @@
         "description": "Checar token do usuário",
         "parameters": [
           {
-            "$ref": "#components/parameters/AuthToken"
+            "$ref": "#/components/parameters/AuthToken"
           }
         ],
         "responses": {
@@ -468,7 +468,7 @@
         "description": "Adiciona ou remove um produto da lista de desejos do usuário.",
         "parameters": [
           {
-            "$ref": "#components/parameters/AuthToken"
+            "$ref": "#/components/parameters/AuthToken"
           },
           {
             "name": "product_id",
@@ -481,16 +481,6 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Produto favoritado com sucesso",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Produto desfavoritado com sucesso",
             "content": {
@@ -501,22 +491,30 @@
               }
             }
           },
+          "201": {
+            "description": "Produto favoritado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "401": {
-            "description": "Usuário não autenticado.",
-            "content": {}
+            "$ref": "#/components/responses/UserNotAuthenticated"
           },
           "404": {
             "description": "Produto favoritado não encontrado.",
             "content": {}
           },
           "500": {
-            "description": "Erro no serviço",
-            "content": {}
+            "$ref": "#/components/responses/UserNotAuthenticated"
           }
         }
       }
     },
-    "/favorites/user": {
+    "/favorites/user/": {
       "get": {
         "tags": [
           "Favoritos"
@@ -525,13 +523,13 @@
         "description": "Retorna uma array com os produtos favoritados pelo usuário autenticado.",
         "parameters": [
           {
-            "$ref": "#components/parameters/AuthToken"
+            "$ref": "#/components/parameters/AuthToken"
           },
           {
-            "$ref": "#components/parameters/Pagination"
+            "$ref": "#/components/parameters/Pagination"
           },
           {
-            "$ref": "#components/parameters/ReturnLimit"
+            "$ref": "#/components/parameters/ReturnLimit"
           }
         ],
         "responses": {
@@ -539,8 +537,7 @@
             "$ref": "#/components/responses/ProductsWithPagination"
           },
           "401": {
-            "description": "Usuário não autenticado.",
-            "content": {}
+            "$ref": "#/components/responses/UserNotAuthenticated"
           },
           "404": {
             "description": "Produto favoritado não encontrado.",
@@ -553,7 +550,7 @@
         }
       }
     },
-    "/addresses": {
+    "/addresses/": {
       "post": {
         "tags": [
           "Endereços"
@@ -562,7 +559,7 @@
         "description": "Cadastra um novo endereço",
         "parameters": [
           {
-            "$ref": "#components/parameters/AuthToken"
+            "$ref": "#/components/parameters/AuthToken"
           }
         ],
         "requestBody": {
@@ -591,9 +588,9 @@
                   }
                 },
                 "required": [
-                  "name", 
+                  "name",
                   "cpf",
-                  "cep", 
+                  "cep",
                   "number",
                   "complement"
                 ]
@@ -607,7 +604,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Endereço"
+                  "$ref": "#/components/schemas/Endereco"
                 }
               }
             }
@@ -619,6 +616,9 @@
           "401": {
             "description": "Usuário não autenticado.",
             "content": {}
+          },
+          "500": {
+            "$ref": "#/components/responses/UserNotAuthenticated"
           }
         }
       },
@@ -629,7 +629,9 @@
         "description": "Retorna todos os endereços de um usuário.",
         "summary": "Retorna todos os endereços de um usuário.",
         "parameters": [
-          { "$ref": "#/components/parameters/AuthToken" }
+          {
+            "$ref": "#/components/parameters/AuthToken"
+          }
         ],
         "responses": {
           "200": {
@@ -639,11 +641,17 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Endereço"
+                    "$ref": "#/components/schemas/Endereco"
                   }
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/UserNotAuthenticated"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
@@ -658,6 +666,7 @@
         "parameters": [
           {"$ref": "#components/parameters/AuthToken"},
           {
+<<<<<<< HEAD
             "name": "id",
             "in": "path",
             "description": "id do produto que deseja atualizar.",
@@ -665,6 +674,18 @@
             "schema": {
               "type": "integer"
             }
+=======
+            "$ref": "#/components/parameters/AuthToken"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Id do endereço que deseja atualizar."
+>>>>>>> 617d4d0e2c02a5b120378fdd81609b802782b527
           }
         ],
         "requestBody": {
@@ -693,9 +714,9 @@
                   }
                 },
                 "required": [
-                  "name", 
+                  "name",
                   "cpf",
-                  "cep", 
+                  "cep",
                   "number",
                   "complement"
                 ]
@@ -709,7 +730,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Endereço"
+                  "$ref": "#/components/schemas/Endereco"
                 }
               }
             }
@@ -721,6 +742,9 @@
           "401": {
             "description": "Usuário não autenticado.",
             "content": {}
+          },
+          "500": {
+            "$ref": "#/components/responses/UserNotAuthenticated"
           }
         }
       },
@@ -731,6 +755,7 @@
         "description": "Retorna todos os endereços de um usuário.",
         "summary": "Retorna todos os endereços de um usuário.",
         "parameters": [
+<<<<<<< HEAD
           { "$ref": "#/components/parameters/AuthToken" },
           {
             "name": "id",
@@ -740,6 +765,19 @@
             "schema": {
               "type": "integer"
             }
+=======
+          {
+            "$ref": "#/components/parameters/AuthToken"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Id do endereço que deseja deletar."
+>>>>>>> 617d4d0e2c02a5b120378fdd81609b802782b527
           }
         ],
         "responses": {
@@ -750,11 +788,205 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Endereço"
+                    "$ref": "#/components/schemas/Endereco"
                   }
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/UserNotAuthenticated"
+          },
+          "500": {
+            "$ref": "#/components/responses/UserNotAuthenticated"
+          }
+        }
+      }
+    },
+    "/cards/": {
+      "get": {
+        "tags": [
+          "Cartões"
+        ],
+        "description": "Retorna todos os cartões de um usuário.",
+        "summary": "Retorna todos os cartões de um usuário.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AuthToken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cartões encontrados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Cartao"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UserNotAuthenticated"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Cartões"
+        ],
+        "description": "Registra um novo cartões na conta do usuário logado.",
+        "summary": "Registra um novo cartões na conta do usuário logado.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AuthToken"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "owner_name": {
+                    "type": "string"
+                  },
+                  "surname": {
+                    "type": "string"
+                  },
+                  "numbers": {
+                    "type": "string"
+                  },
+                  "due_date": {
+                    "type": "string"
+                  },
+                  "type_id": {
+                    "type": "integer"
+                  },
+                  "user_id": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "owner_name",
+                  "surname",
+                  "numbers",
+                  "due_date",
+                  "type_id",
+                  "user_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Cartão registrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cartao"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UserNotAuthenticated"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/cards/{id}": {
+      "get": {
+        "tags": [
+          "Cartões"
+        ],
+        "description": "Retorna todos os cartões de um usuário.",
+        "summary": "Retorna todos os cartões de um usuário.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AuthToken"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID do cartão que deseja consultar."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cartão encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Cartao"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UserNotAuthenticated"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Cartões"
+        ],
+        "description": "Registra um novo cartões na conta do usuário logado.",
+        "summary": "Registra um novo cartões na conta do usuário logado.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AuthToken"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "ID do cartão que deseja deletar."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cartão deletado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cartao"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UserNotAuthenticated"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
@@ -791,10 +1023,30 @@
             }
           }
         }
+      },
+      "ServerError": {
+        "description": "Algo de errado no servidor",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "UserNotAuthenticated": {
+        "description": "Usuário não autenticado.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
       }
     },
     "schemas": {
-      "Endereço": {
+      "Endereco": {
         "type": "object",
         "properties": {
           "id": {
@@ -889,6 +1141,12 @@
           },
           "Category": {
             "$ref": "#/components/schemas/Categoria"
+          },
+          "Favorites": {
+            "$ref": "#/components/schemas/Favorito"
+          },
+          "Carts": {
+            "$ref": "#/components/schemas/Carrinho"
           }
         }
       },
@@ -906,6 +1164,46 @@
           },
           "Product": {
             "$ref": "#/components/schemas/Produto"
+          }
+        }
+      },
+      "Carrinho": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "product_id": {
+            "type": "integer"
+          }
+        }
+      },
+      "Cartao": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "owner_name": {
+            "type": "string"
+          },
+          "surname": {
+            "type": "string"
+          },
+          "numbers": {
+            "type": "string"
+          },
+          "due_date": {
+            "type": "string"
+          },
+          "type_id": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": "integer"
           }
         }
       }
