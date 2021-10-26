@@ -53,7 +53,7 @@ async function validateAddressMiddleware( req: Request, res: Response, next: Nex
         
         if(req.method === 'put') {
             const { id } = req.params;
-            where['id'] = { [Op.notIn]: [id] }
+            where['id'] = { [Op.not]: [id] }
         }
 
        if(!validateCEP)
