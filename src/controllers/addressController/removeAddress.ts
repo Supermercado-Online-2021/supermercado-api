@@ -26,7 +26,9 @@ async function removeAddress( req: Request, res: Response ) {
             message: "Endereço não encontrado"
         });
     }catch(err) {
-        return res.status(500).json(err);
+        return res.status(500).json({
+            message: "Erro interno no servidor"
+        });
     }
 }
 

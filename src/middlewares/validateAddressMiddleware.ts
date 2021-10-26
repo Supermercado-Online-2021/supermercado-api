@@ -1,8 +1,11 @@
 
 import { NextFunction, Request, Response } from "express";
 import axios, { AxiosResponse } from 'axios';
+import { Op } from 'sequelize';
 
+import models from '../models/';
 import validationCPF from '../middlewares/userValidation/validateCPF';
+import Validation from "src/types/Validation";
 
 
 
@@ -27,19 +30,58 @@ async function validationCEP (cep: string): Promise<boolean> {
 }
 
 
-
 async function validateAddressMiddleware( req: Request, res: Response, next: NextFunction ) {
-    const { cpf, cep } = req.body;
+    try{
+        const { cpf, cep, number } = req.body;
+        const { id: user_id } = res.locals.user;
 
-    const validateCEP = await validationCEP(cep);
-    const validateCPF = validationCPF(cpf);
+        const validateCEP = cep || req.method === 'post'
+        ? await validationCEP(cep)
+        : true;
 
-    if(!validateCEP)
-        return res.status(400).json({ message: "CEP inválido "});
-    if(!validateCPF.pass)
-        return res.status(400).json(validateCPF.message);
+        const validateCPF = cpf || req.method === 'post'
+            ? await validationCPF(cpf)
+            : { pass: true, message: '' };
 
-    next();
+        const where: any = {
+            user_id,
+            [Op.or]: { 
+                cpf,
+                [Op.and]: { cep, number }  
+            }
+        };
+        
+        if(req.method === 'put') {
+            const { id } = req.params;
+            where['id'] = { [Op.notIn]: [id] }
+        }
+
+       if(!validateCEP)
+            return res.status(400).json({ message: "CEP inválido "});
+        if(validateCPF.pass === false)
+            return res.status(400).json({ message: validateCPF.message });
+        else {
+            const addressExists = await models.Address.findOne({
+                where: { [Op.and]: where }
+            });
+
+            if(addressExists) {
+                const message = addressExists.getDataValue('cpf') === cpf
+                    ? "CPF cadastrado em outro destinatário."
+                    : "Endereço já cadastrado";
+
+                return res.status(409).json({
+                    message
+                });
+            }
+        }
+
+        next();
+    }catch(err) {
+        return res.status(500).json({
+            message: "Erro no servidor, tente novamente mais tarde."
+        });
+    }
 }
 
 export default validateAddressMiddleware;
