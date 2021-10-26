@@ -6,16 +6,6 @@
     "moduleResolution": "node",
     "rootDir": "./",
     "baseUrl": "./",
-    // "paths": {
-    //   "@Config/*": ["./src/config/*"],
-    //   "@Controllers/*": ["./src/controllers/*"],
-    //   "@Database/*": ["./src/database/*"],
-    //   "@Middlewares/*": ["./src/middlewares/*"],
-    //   "@Models/*": ["./src/models/*"],
-    //   "@Routes/*": [ "./src/routes/*" ],
-    //   "@Types/*": ["./src/types/*"],
-    //   "@Util/*": ["./src/util/*"]
-    // },
     "resolveJsonModule": true,
     "allowJs": true,
     "outDir": "./dist",

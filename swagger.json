@@ -666,7 +666,6 @@
         "parameters": [
           {"$ref": "#components/parameters/AuthToken"},
           {
-<<<<<<< HEAD
             "name": "id",
             "in": "path",
             "description": "id do produto que deseja atualizar.",
@@ -674,18 +673,6 @@
             "schema": {
               "type": "integer"
             }
-=======
-            "$ref": "#/components/parameters/AuthToken"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true,
-            "description": "Id do endereço que deseja atualizar."
->>>>>>> 617d4d0e2c02a5b120378fdd81609b802782b527
           }
         ],
         "requestBody": {
@@ -755,7 +742,6 @@
         "description": "Retorna todos os endereços de um usuário.",
         "summary": "Retorna todos os endereços de um usuário.",
         "parameters": [
-<<<<<<< HEAD
           { "$ref": "#/components/parameters/AuthToken" },
           {
             "name": "id",
@@ -765,19 +751,6 @@
             "schema": {
               "type": "integer"
             }
-=======
-          {
-            "$ref": "#/components/parameters/AuthToken"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true,
-            "description": "Id do endereço que deseja deletar."
->>>>>>> 617d4d0e2c02a5b120378fdd81609b802782b527
           }
         ],
         "responses": {
