@@ -15,10 +15,10 @@ const Address = sequelize.define( 'Address', {
         type: DataTypes.STRING, 
         allowNull: false
     },
-    // cpf: {
-    //     type: DataTypes.STRING,
-    //     allowNull: false
-    // },
+    cpf: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     cep: {
         type: DataTypes.STRING,
         allowNull: false
