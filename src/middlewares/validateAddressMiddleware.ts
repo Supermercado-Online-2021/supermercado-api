@@ -35,11 +35,11 @@ async function validateAddressMiddleware( req: Request, res: Response, next: Nex
         const { cpf, cep, number } = req.body;
         const { id: user_id } = res.locals.user;
 
-        const validateCEP = cep || req.method === 'post'
+        const validateCEP = cep !== undefined || req.method === 'POST'
         ? await validationCEP(cep)
         : true;
 
-        const validateCPF = cpf || req.method === 'post'
+        const validateCPF = cpf !== undefined || req.method === 'POST'
             ? await validationCPF(cpf)
             : { pass: true, message: '' };
 
@@ -51,9 +51,9 @@ async function validateAddressMiddleware( req: Request, res: Response, next: Nex
             }
         };
         
-        if(req.method === 'put') {
+        if(req.method === 'PUT') {
             const { id } = req.params;
-            where['id'] = { [Op.not]: [id] }
+            where['id'] = { [Op.notIn]: [id] }
         }
 
        if(!validateCEP)
