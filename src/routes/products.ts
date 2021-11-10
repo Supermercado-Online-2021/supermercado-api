@@ -23,6 +23,7 @@ const defaultMiddlewares = [
 router.get( '/product/:id', 
     opcionalAuthUserMiddleware,
     validateProductAttributes,
+    userProductIncludeMiddleware,
     productController.findProductByPk
 );
 

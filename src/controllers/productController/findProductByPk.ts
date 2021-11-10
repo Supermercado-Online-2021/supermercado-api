@@ -8,13 +8,11 @@ import models from '../../models/';
 async function findProductByPk( req: Request, res: Response ) {
     try {
         const { id } = req.params;
-        const { fields, attributes } = res.locals;
+        const { fields, attributes, include } = res.locals;
 
         const data = await models.Product.findByPk(id, {
             attributes,
-            include: fields.some( (f:string) => f==='category' ) 
-                ? { model: models.Category }
-                : undefined,
+            include,
             raw: true,
             nest: true
         });
