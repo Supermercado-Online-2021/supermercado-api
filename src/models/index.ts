@@ -21,7 +21,7 @@ import ShoppingList from './ShoppingList';
 
 
 Product.belongsTo( Category, { foreignKey: 'category_id' } );
-Category.hasMany( Product, { foreignKey: 'id' } );
+Category.hasMany( Product, { foreignKey: 'category_id' } );
 
 Favorite.belongsTo( User, { foreignKey: 'user_id' });
 User.hasMany( Favorite, { foreignKey: 'user_id' });
@@ -42,7 +42,7 @@ Cart.belongsTo( Product, { foreignKey: 'product_id' });
 Product.hasMany( Cart, { foreignKey: 'product_id' });
 
 Address.belongsTo( User, { foreignKey: 'user_id' });
-User.hasMany( Address, { foreignKey: 'id' });
+User.hasMany( Address, { foreignKey: 'user_id' });
 
 
 
@@ -55,8 +55,8 @@ Order.hasOne( PaymentMethod, { foreignKey: 'form_payment_id' });
 Address.belongsTo( Order, { foreignKey: 'address_id' });
 Order.hasOne( Address,{ foreignKey: 'address_id' });
 
-Order.hasOne( User, { foreignKey: 'user_id' });
-User.belongsTo( Order, { foreignKey: 'user_id' });
+User.hasOne( Order, { foreignKey: 'user_id' });
+Order.belongsTo( User, { foreignKey: 'user_id' });
 
 
 
