@@ -8,11 +8,11 @@ import models from '../models'
 async function userProductIncludeMiddleware(req: Request, res: Response, next: NextFunction) {
     try {
         const { auth, user, fields } = res.locals;
-    
+
         const include = [];
         
         if (auth) {
-            if( fields.some( (f: string) => f === 'category' ) )
+            if( fields && fields.some( (f: string) => f === 'category' ) )
                 include.push({ model: models.Category })
 
             if(user) {
