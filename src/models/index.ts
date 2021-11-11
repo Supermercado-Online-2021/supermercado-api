@@ -52,8 +52,8 @@ Status.belongsToMany( Order, { through: OrderStatus });
 PaymentMethod.belongsTo( Order, { foreignKey: 'form_payment_id' });
 Order.hasOne( PaymentMethod, { foreignKey: 'form_payment_id' });
 
-Address.belongsTo( Order, { foreignKey: 'address_id' });
-Order.hasOne( Address,{ foreignKey: 'address_id' });
+Order.belongsTo( Address, { foreignKey: 'address_id' });
+Address.hasOne( Order,{ foreignKey: 'address_id' });
 
 User.hasOne( Order, { foreignKey: 'user_id' });
 Order.belongsTo( User, { foreignKey: 'user_id' });
