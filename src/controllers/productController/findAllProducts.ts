@@ -17,7 +17,7 @@ async function findAllProducts( req: Request, res: Response, next: NextFunction 
             limit,
             offset,
             attributes: [ 'id', ...attributes ],
-            include,
+            include: [ ...include ],
             raw: true,
             nest: true
         });
