@@ -8,8 +8,6 @@ import validateCPF from './validateCPF';
 import validatePassword from './validatePassword';
 import validateEmail from './validateEmail';
 
-import User from '../../types/User';
-
 import models from '../../models/';
 
 
@@ -26,27 +24,6 @@ async function userValidationMiddleware ( req: Request, res: Response, next: Nex
 
         if(validate.pass === false)
             return res.status(400).json(validate);
-        else {
-            const registerUser = await models.User.findOne({
-                where: {
-                    [Op.or]: {
-                        cpf, email, phone
-                    }
-                }
-            });
-
-            if(registerUser) {
-                return res.status(409).json({
-                    error: "User alreldy exists",
-                    field: 'email',
-                    message: registerUser.getDataValue('email') === email
-                        ? "Email já cadastrado"
-                        : registerUser.getDataValue('cpf') === cpf
-                            ? "CPF já cadastrado"
-                            :  registerUser.getDataValue('phone') === phone ? "Telefone já cadastrado": "Usuário já cadastrado"
-                });
-            }
-        }
 
         next(); 
     } catch(err) {
