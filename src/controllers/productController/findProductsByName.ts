@@ -17,9 +17,9 @@ async function findProductsByName( req: Request, res: Response, next: NextFuncti
                 ? { name: { [Op.like]: `%${name}%` } }
                 : undefined,
             limit,
-            offset, 
-            attributes,
-            include,
+            offset,
+            attributes: [ 'id', ...attributes ],
+            include: [ ...include ],
             raw: true,
             nest: true
         });
