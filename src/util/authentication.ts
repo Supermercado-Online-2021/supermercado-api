@@ -5,6 +5,7 @@ const SECRET: string = (process.env.SECRET as string);
 const EXPIRED_TIME: number = Number(process.env.EXPIRED_TIME) || 300;
 
 
+
 interface TokenLogout {
     token: string,
     date: Date
@@ -61,3 +62,21 @@ export function destroy( token: string ) {
         }
     });
 }
+
+
+
+setInterval( () => {
+    if(backlistToken.length > 0) {
+        const current = Date.now();
+
+        const cleanList = backlistToken.filter( token => {
+            const expiredAt = new Date(token.date).getTime();
+            const expired = expiredAt - current;
+
+            return expired > 0;
+        });
+
+        backlistToken.splice( 0, backlistToken.length );
+        cleanList.forEach( token => backlistToken.push(token) );
+    }
+}, 1000 * 60 );
